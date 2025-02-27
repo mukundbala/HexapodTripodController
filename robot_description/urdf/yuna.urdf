@@ -4,6 +4,15 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="m6">
+  <material name="red">
+    <color rgba="0.92 0.0 0.0 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0.2 0.2 0.2 1"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.6 0.6 0.6 1"/>
+  </material>
   <!-- <link name="dummy">
   </link>
 
@@ -20,10 +29,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_base_matt6_boxed_full.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_base_matt6_boxed_full.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.39216 0.81961 0.93333 1"/>
+      <material name="black">
       </material>
     </visual>
     <collision>
@@ -122,7 +130,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/camera_mount.STL" scale="1 1 1"/>
+        <mesh filename="package://robot_description/meshes/camera_mount.STL" scale="1 1 1"/>
       </geometry>
       <material name="">
         <color rgba="0.79216 0.81961 0.93333 1"/>
@@ -131,7 +139,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/camera_mount.STL" scale="1 1 1"/>
+        <mesh filename="package://robot_description/meshes/camera_mount.STL" scale="1 1 1"/>
       </geometry>
     </collision>
   </link>
@@ -142,253 +150,41 @@
     <axis xyz="0 0 1"/>
     <limit effort="0" velocity="0"/>
   </joint>
-  <!-- <joint name="camera_joint" type="fixed">
-      <axis xyz="0 1 0" />
-      <origin xyz="0 0 0" rpy="$0 0 0" />
-      <parent link="camera_mount"/>
-      <child link="camera_joint_link"/>
-    </joint>
-    <link name="camera_mount"/>
-    <link name="camera_joint_link"/> -->
-  <!--<xacro:include filename="$(find realsense_gazebo_plugin)/urdf/realsense-RS200.macro.xacro"/>-->
-  <!--<xacro:include filename="$(find xMonsterCPG)/urdf/_d435.urdf.xacro"/>
-    Create camera instance
-    <xacro:realsense-rs200 prefix="left_" parent="base_link">
-        <origin xyz="0.13 0.0 0.285" rpy="0 .13 0" />
-    </xacro:realsense-rs200>-->
-  <!-- <xacro:include filename="$(find realsense_gazebo_plugin)/urdf/realsense-RS200.macro.xacro"/>
-    <xacro:realsense-rs200 prefix="realsense_" parent="base_link">
-        <origin xyz="0.125 0 0.285" rpy="0 .33 0" />
-    </xacro:realsense-rs200> -->
-  <material name="realsense_d435_camera_aluminum">
-    <color rgba="0.5 0.5 0.5 1"/>
-  </material>
-  <!-- camera body, with origin at bottom screw mount -->
-  <joint name="realsense_d435_camera_joint" type="fixed">
-    <origin rpy="0 0.2 0" xyz="0.1 0.0 0.3"/>
-    <parent link="base_link"/>
-    <child link="realsense_d435_camera_bottom_screw_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_bottom_screw_frame"/>
-  <joint name="realsense_d435_camera_link_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0.0175 0.0125"/>
-    <parent link="realsense_d435_camera_bottom_screw_frame"/>
-    <child link="realsense_d435_camera_link"/>
-  </joint>
-  <link name="realsense_d435_camera_link">
-    <visual>
-      <origin rpy="1.57079632679 0 1.57079632679" xyz="0.0149 -0.0175 0"/>
-      <geometry>
-        <!-- <box size="${d435_cam_width} ${d435_cam_height} ${d435_cam_depth}"/> -->
-        <!--<mesh filename="package://realsense2_description/meshes/d435.dae" />-->
-        <mesh filename="package://xMonsterCPG/meshes/d435.dae"/>
-        <!--<mesh filename="package://realsense2_description/meshes/d435/d435.dae" />-->
-      </geometry>
-      <material name="realsense_d435_camera_aluminum"/>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 -0.0175 0"/>
-      <geometry>
-        <box size="0.02505 0.09 0.025"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <!-- The following are not reliable values, and should not be used for modeling -->
-      <mass value="0.564"/>
-      <origin xyz="0 0 0"/>
-      <inertia ixx="0.003881243" ixy="0.0" ixz="0.0" iyy="0.000498940" iyz="0.0" izz="0.003879257"/>
-    </inertial>
-  </link>
-  <!-- camera depth joints and links -->
-  <joint name="realsense_d435_camera_depth_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <parent link="realsense_d435_camera_link"/>
-    <child link="realsense_d435_camera_depth_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_depth_frame"/>
-  <joint name="realsense_d435_camera_depth_optical_joint" type="fixed">
-    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
-    <parent link="realsense_d435_camera_depth_frame"/>
-    <child link="realsense_d435_camera_depth_optical_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_depth_optical_frame"/>
-  <!-- camera left IR joints and links -->
-  <joint name="realsense_d435_camera_left_ir_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0.0 0"/>
-    <parent link="realsense_d435_camera_depth_frame"/>
-    <child link="realsense_d435_camera_left_ir_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_left_ir_frame"/>
-  <joint name="realsense_d435_camera_left_ir_optical_joint" type="fixed">
-    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
-    <parent link="realsense_d435_camera_left_ir_frame"/>
-    <child link="realsense_d435_camera_left_ir_optical_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_left_ir_optical_frame"/>
-  <!-- camera right IR joints and links -->
-  <joint name="realsense_d435_camera_right_ir_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 -0.05 0"/>
-    <parent link="realsense_d435_camera_depth_frame"/>
-    <child link="realsense_d435_camera_right_ir_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_right_ir_frame"/>
-  <joint name="realsense_d435_camera_right_ir_optical_joint" type="fixed">
-    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
-    <parent link="realsense_d435_camera_right_ir_frame"/>
-    <child link="realsense_d435_camera_right_ir_optical_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_right_ir_optical_frame"/>
-  <!-- camera color joints and links -->
-  <joint name="realsense_d435_camera_color_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <parent link="realsense_d435_camera_depth_frame"/>
-    <child link="realsense_d435_camera_color_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_color_frame"/>
-  <joint name="realsense_d435_camera_color_optical_joint" type="fixed">
-    <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0"/>
-    <parent link="realsense_d435_camera_color_frame"/>
-    <child link="realsense_d435_camera_color_optical_frame"/>
-  </joint>
-  <link name="realsense_d435_camera_color_optical_frame"/>
-  <gazebo reference="realsense_d435_camera_link">
-    <self_collide>0</self_collide>
-    <enable_wind>0</enable_wind>
-    <kinematic>0</kinematic>
-    <gravity>1</gravity>
-    <!--<mu>1</mu>-->
-    <mu2>1</mu2>
-    <fdir1>0 0 0</fdir1>
-    <!--<slip1>0</slip1>
-      <slip2>0</slip2>-->
-    <kp>1e+13</kp>
-    <kd>1</kd>
-    <!--<max_vel>0.01</max_vel>
-      <min_depth>0</min_depth>-->
-    <sensor name="realsense_d435_cameracolor" type="camera">
-      <camera name="realsense_d435_camera">
-        <horizontal_fov>1.21125850088</horizontal_fov>
-        <image>
-          <width>1920</width>
-          <height>1080</height>
-          <format>RGB_INT8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>100</far>
-        </clip>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.007</stddev>
-        </noise>
-      </camera>
-      <always_on>1</always_on>
-      <update_rate>100</update_rate>
-      <visualize>0</visualize>
-    </sensor>
-    <sensor name="realsense_d435_cameraired1" type="camera">
-      <camera name="realsense_d435_camera">
-        <horizontal_fov>1.4870205227</horizontal_fov>
-        <image>
-          <width>1280</width>
-          <height>720</height>
-          <format>L_INT8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>100</far>
-        </clip>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.05</stddev>
-        </noise>
-      </camera>
-      <always_on>1</always_on>
-      <update_rate>100</update_rate>
-      <visualize>0</visualize>
-    </sensor>
-    <sensor name="realsense_d435_cameraired2" type="camera">
-      <camera name="realsense_d435_camera">
-        <horizontal_fov>1.4870205227</horizontal_fov>
-        <image>
-          <width>1280</width>
-          <height>720</height>
-          <format>L_INT8</format>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>100</far>
-        </clip>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.05</stddev>
-        </noise>
-      </camera>
-      <always_on>1</always_on>
-      <update_rate>100</update_rate>
-      <visualize>0</visualize>
-    </sensor>
-    <sensor name="realsense_d435_cameradepth" type="depth">
-      <camera name="realsense_d435_camera">
-        <horizontal_fov>1.21125850088</horizontal_fov>
-        <image>
-          <width>1080</width>
-          <height>720</height>
-        </image>
-        <clip>
-          <near>0.1</near>
-          <far>100</far>
-        </clip>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.100</stddev>
-        </noise>
-      </camera>
-      <always_on>1</always_on>
-      <update_rate>100</update_rate>
-      <visualize>0</visualize>
-    </sensor>
+
+  <gazebo reference="base_link">
+      <sensor name="imu_sensor" type="imu">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <imu>
+              <angular_velocity>
+                  <noise type="gaussian">
+                      <mean>0.0</mean>
+                      <stddev>0.01</stddev>
+                  </noise>
+              </angular_velocity>
+              <linear_acceleration>
+                  <noise type="gaussian">
+                      <mean>0.0</mean>
+                      <stddev>0.02</stddev>
+                  </noise>
+              </linear_acceleration>
+          </imu>
+      </sensor>
   </gazebo>
-  <gazebo>
-    <plugin filename="librealsense_gazebo_plugin.so" name="realsense_d435">
-      <prefix>realsense_d435_camera</prefix>
-      <depthUpdateRate>100</depthUpdateRate>
-      <colorUpdateRate>100</colorUpdateRate>
-      <infraredUpdateRate>60.0</infraredUpdateRate>
-      <depthTopicName>depth/image_raw</depthTopicName>
-      <depthCameraInfoTopicName>depth/camera_info</depthCameraInfoTopicName>
-      <colorTopicName>color/image_raw</colorTopicName>
-      <colorCameraInfoTopicName>color/camera_info</colorCameraInfoTopicName>
-      <infrared1TopicName>infra1/image_raw</infrared1TopicName>
-      <infrared1CameraInfoTopicName>infra1/camera_info</infrared1CameraInfoTopicName>
-      <infrared2TopicName>infra2/image_raw</infrared2TopicName>
-      <infrared2CameraInfoTopicName>infra2/camera_info</infrared2CameraInfoTopicName>
-      <colorOpticalframeName>realsense_d435_camera_color_optical_frame</colorOpticalframeName>
-      <depthOpticalframeName>realsense_d435_camera_depth_optical_frame</depthOpticalframeName>
-      <infrared1OpticalframeName>realsense_d435_camera_left_ir_optical_frame</infrared1OpticalframeName>
-      <infrared2OpticalframeName>realsense_d435_camera_right_ir_optical_frame</infrared2OpticalframeName>
-      <rangeMinDepth>0.2</rangeMinDepth>
-      <rangeMaxDepth>3.0</rangeMaxDepth>
-      <pointCloud>true</pointCloud>
-      <pointCloudTopicName>depth/points</pointCloudTopicName>
-      <pointCloudCutoff>0.2</pointCloudCutoff>
-      <pointCloudCutoffMax>3</pointCloudCutoffMax>
+
+  <gazebo reference="base_link">
+    <plugin filename="libgazebo_ros_imu_sensor.so" name="gazebo_ros_imu_sensor">
+        <ros>
+            <namespace>/</namespace>
+            <remapping>imu/data:=imu</remapping>
+        </ros>
+        <update_rate>100</update_rate>
+        <body_name>base_link</body_name>
+        <topic_name>imu</topic_name>
+        <frame_name>base_link</frame_name>
     </plugin>
   </gazebo>
-  <gazebo>
-    <plugin filename="libgazebo_ros_imu.so" name="imu_plugin">
-      <alwaysOn>true</alwaysOn>
-      <bodyName>base_link</bodyName>
-      <topicName>camera_imu</topicName>
-      <serviceName>imu_service</serviceName>
-      <gaussianNoise>0.0</gaussianNoise>
-      <updateRate>100.0</updateRate>
-    </plugin>
-  </gazebo>
+
   <link name="base1__INPUT_INTERFACE">
     <inertial>
       <origin rpy="0 0 0" xyz="0.015005 0.001775 0.015011"/>
@@ -398,10 +194,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.015"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_base_motor.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_base_motor.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -410,7 +205,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/base_motor.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/base_motor.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019940 0.001750 0.015525"/>
       <geometry>
@@ -434,10 +229,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_left_link1_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_left_link1_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <collision>
@@ -446,7 +240,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/left_link1_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/left_link1_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="-0.019070 -0.014470 0.052500"/>
       <geometry>
@@ -481,10 +275,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link2_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link2_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -493,7 +286,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link2_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link2_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.005750 0.0 0.018750"/>
       <geometry>
@@ -546,10 +339,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link3_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link3_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <!--collision>
@@ -558,7 +350,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link3_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link3_red.STL" />
         </geometry>
       </collision-->
     <collision>
@@ -621,10 +413,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.015"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_base_motor.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_base_motor.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -633,7 +424,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/base_motor.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/base_motor.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019940 0.001750 0.015525"/>
       <geometry>
@@ -657,10 +448,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_left_link1_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_left_link1_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <collision>
@@ -669,7 +459,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/left_link1_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/left_link1_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="-0.019070 -0.014470 0.052500"/>
       <geometry>
@@ -704,10 +494,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link2_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link2_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -716,7 +505,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link2_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link2_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.005750 0.0 0.018750"/>
       <geometry>
@@ -769,10 +558,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link3_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link3_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <!--collision>
@@ -781,7 +569,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link3_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link3_red.STL" />
         </geometry>
       </collision-->
     <collision>
@@ -844,10 +632,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.015"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_base_motor.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_base_motor.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -856,7 +643,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/base_motor.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/base_motor.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019940 0.001750 0.015525"/>
       <geometry>
@@ -880,10 +667,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_left_link1_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_left_link1_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <collision>
@@ -892,7 +678,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/left_link1_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/left_link1_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="-0.019070 -0.014470 0.052500"/>
       <geometry>
@@ -927,10 +713,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link2_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link2_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -939,7 +724,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link2_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link2_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.005750 0.0 0.018750"/>
       <geometry>
@@ -992,10 +777,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link3_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link3_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <!--collision>
@@ -1004,7 +788,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link3_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link3_red.STL" />
         </geometry>
       </collision-->
     <collision>
@@ -1067,10 +851,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.015"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_base_motor.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_base_motor.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -1079,7 +862,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/base_motor.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/base_motor.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019940 0.001750 0.015525"/>
       <geometry>
@@ -1103,10 +886,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_right_link1_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_right_link1_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <collision>
@@ -1115,7 +897,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/right_link1_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/right_link1_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019070 -0.014470 0.052500"/>
       <geometry>
@@ -1150,10 +932,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link2_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link2_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -1162,7 +943,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link2_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link2_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.005750 0.0 0.018750"/>
       <geometry>
@@ -1215,10 +996,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link3_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link3_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <!--collision>
@@ -1227,7 +1007,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link3_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link3_red.STL" />
         </geometry>
       </collision-->
     <collision>
@@ -1290,10 +1070,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.015"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_base_motor.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_base_motor.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -1302,7 +1081,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/base_motor.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/base_motor.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019940 0.001750 0.015525"/>
       <geometry>
@@ -1326,10 +1105,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_right_link1_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_right_link1_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <collision>
@@ -1338,7 +1116,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/right_link1_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/right_link1_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019070 -0.014470 0.052500"/>
       <geometry>
@@ -1373,10 +1151,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link2_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link2_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -1385,7 +1162,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link2_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link2_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.005750 0.0 0.018750"/>
       <geometry>
@@ -1438,10 +1215,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link3_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link3_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <!--collision>
@@ -1450,7 +1226,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link3_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link3_red.STL" />
         </geometry>
       </collision-->
     <collision>
@@ -1513,10 +1289,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0.015"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_base_motor.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_base_motor.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -1525,7 +1300,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/base_motor.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/base_motor.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019940 0.001750 0.015525"/>
       <geometry>
@@ -1549,10 +1324,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_right_link1_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_right_link1_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <collision>
@@ -1561,7 +1335,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/right_link1_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/right_link1_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.019070 -0.014470 0.052500"/>
       <geometry>
@@ -1596,10 +1370,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link2_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link2_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="red">
       </material>
     </visual>
     <collision>
@@ -1608,7 +1381,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link2_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link2_red.STL" />
         </geometry-->
       <origin rpy="0 0 0" xyz="0.005750 0.0 0.018750"/>
       <geometry>
@@ -1661,10 +1434,9 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://xMonsterCPG/meshes/M6_link3_red.STL"/>
+        <mesh filename="package://robot_description/meshes/M6_link3_red.STL"/>
       </geometry>
-      <material name="">
-        <color rgba="0.75294 0.75294 0.75294 1"/>
+      <material name="grey">
       </material>
     </visual>
     <!--collision>
@@ -1673,7 +1445,7 @@
           rpy="0 0 0" />
         <geometry>
           <mesh
-            filename="package://xMonsterCPG/meshes/boxed_meshes/link3_red.STL" />
+            filename="package://robot_description/meshes/boxed_meshes/link3_red.STL" />
         </geometry>
       </collision-->
     <collision>
